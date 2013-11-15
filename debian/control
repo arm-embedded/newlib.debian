@@ -1,0 +1,55 @@
+Source: newlib
+Section: devel
+Priority: extra
+Maintainer: Agustin Henze <tin@debian.org>
+Build-Depends:
+ debhelper (>= 9),
+ texinfo,
+ dpkg-dev (>= 1.16.0),
+ autotools-dev,
+ dejagnu,
+ gcc-arm-none-eabi,
+Standards-Version: 3.9.5
+Homepage: https://sourceware.org/newlib/
+Vcs-Git: git://anonscm.debian.org/collab-maint/newlib.git
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/newlib.git
+
+Package: libnewlib-dev
+Architecture: all
+Section: libdevel
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Breaks: libnewlib0
+Replaces: libnewlib0
+Suggests: libnewlib-arm-none-eabi, gcc-arm-none-eabi
+Description: C library and math library intended for use on embedded systems
+ Newlib is a C library and math library intended for use on embedded systems.
+ It is a conglomeration of several library parts, all under free software
+ licenses that make them easily usable on embedded products.
+ .
+ This package contains the newlib headers.
+
+Package: libnewlib-doc
+Architecture: all
+Section: doc
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Recommends: libnewlib-dev
+Description: C library and math library intended for use on embedded systems (doc)
+ Newlib is a C library and math library intended for use on embedded systems.
+ It is a conglomeration of several library parts, all under free software
+ licenses that make them easily usable on embedded products.
+ .
+ This package contains the newlib documentation.
+
+Package: libnewlib-arm-none-eabi
+Architecture: all
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}, libnewlib-dev
+Recommends: gcc-arm-none-eabi
+Suggests: libnewlib-doc
+Description: C library and math library compiled for bare metal using Cortex A/R/M
+ Newlib is a C library and math library intended for use on embedded systems.
+ It is a conglomeration of several library parts, all under free software
+ licenses that make them easily usable on embedded products.
+ .
+ This package contains the newlib library compiled for Cortex-A*,
+ Cortex-R4/R5/R7 and Cortex-M0/M0+/M3/M4 targets.

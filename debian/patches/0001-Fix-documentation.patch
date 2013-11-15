@@ -1,0 +1,392 @@
+From: Agustin Henze <tin@sluc.org.ar>
+Date: Thu, 14 Nov 2013 18:57:22 -0300
+Subject: Fix documentation: * "unknown commands - colophon and cygnus" *
+ "menu reference to nonexistent node"
+
+---
+ newlib/libc/libc.texinfo        |   4 +-
+ newlib/libm/complex/complex.tex |  88 ++++++++++++----
+ newlib/libm/libm.texinfo        |   8 +-
+ newlib/libm/math/math.tex       | 219 ++++++++++++++++++++++++++++++----------
+ 4 files changed, 236 insertions(+), 83 deletions(-)
+
+diff --git a/newlib/libc/libc.texinfo b/newlib/libc/libc.texinfo
+index b75d577..74d448d 100644
+--- a/newlib/libc/libc.texinfo
++++ b/newlib/libc/libc.texinfo
+@@ -429,7 +429,7 @@ usage as the ANSI C version from @file{stdarg.h}.
+ @printindex cp
+ 
+ @tex
+-% I think something like @colophon should be in texinfo.  In the
++% I think something like @@colophon should be in texinfo.  In the
+ % meantime:
+ \long\def\colophon{\hbox to0pt{}\vfill
+ \centerline{The body of this manual is set in}
+@@ -440,7 +440,7 @@ usage as the ANSI C version from @file{stdarg.h}.
+ \centerline{{\sl\fontname\tensl\/}}
+ \centerline{are used for emphasis.}\vfill}
+ \page\colophon
+-% Blame: pesch@cygnus.com, 28mar91.
++% Blame: pesch@@cygnus.com, 28mar91.
+ @end tex
+ 
+ @contents
+diff --git a/newlib/libm/complex/complex.tex b/newlib/libm/complex/complex.tex
+index 4ac14c3..9d29098 100644
+--- a/newlib/libm/complex/complex.tex
++++ b/newlib/libm/complex/complex.tex
+@@ -31,25 +31,69 @@ Functions and documentations are taken from NetBSD.
+ @end menu
+ 
+ 
+-@page @include   complex/cabs.def
+-@page @include   complex/cacos.def
+-@page @include   complex/cacosh.def
+-@page @include   complex/carg.def
+-@page @include   complex/casin.def
+-@page @include   complex/casinh.def
+-@page @include   complex/catan.def
+-@page @include   complex/catanh.def
+-@page @include   complex/ccos.def
+-@page @include   complex/ccosh.def
+-@page @include   complex/cexp.def
+-@page @include   complex/cimag.def
+-@page @include   complex/clog.def
+-@page @include   complex/conj.def
+-@page @include   complex/cpow.def
+-@page @include   complex/cproj.def
+-@page @include   complex/creal.def
+-@page @include   complex/csin.def
+-@page @include   complex/csinh.def
+-@page @include   complex/csqrt.def
+-@page @include   complex/ctan.def
+-@page @include   complex/ctanh.def
++@page
++@include   complex/cabs.def
++
++@page
++@include   complex/cacos.def
++
++@page
++@include   complex/cacosh.def
++
++@page
++@include   complex/carg.def
++
++@page
++@include   complex/casin.def
++
++@page
++@include   complex/casinh.def
++
++@page
++@include   complex/catan.def
++
++@page
++@include   complex/catanh.def
++
++@page
++@include   complex/ccos.def
++
++@page
++@include   complex/ccosh.def
++
++@page
++@include   complex/cexp.def
++
++@page
++@include   complex/cimag.def
++
++@page
++@include   complex/clog.def
++
++@page
++@include   complex/conj.def
++
++@page
++@include   complex/cpow.def
++
++@page
++@include   complex/cproj.def
++
++@page
++@include   complex/creal.def
++
++@page
++@include   complex/csin.def
++
++@page
++@include   complex/csinh.def
++
++@page
++@include   complex/csqrt.def
++
++@page
++@include   complex/ctan.def
++
++@page
++@include   complex/ctanh.def
++
+diff --git a/newlib/libm/libm.texinfo b/newlib/libm/libm.texinfo
+index 49e66e9..147dc7e 100644
+--- a/newlib/libm/libm.texinfo
++++ b/newlib/libm/libm.texinfo
+@@ -86,10 +86,10 @@ into another language, under the above conditions for modified versions.
+ @end titlepage
+ @end iftex
+ 
+-@ifinfo
++@ifnottex
+ @node Top
+ @top LIBM
+-@end ifinfo
++@end ifnottex
+ 
+ @menu
+ * Math::           The mathematical functions (`math.h').
+@@ -135,7 +135,7 @@ For such platforms, the long double math functions are implemented as calls to t
+ @printindex cp
+ 
+ @tex
+-% I think something like @colophon should be in texinfo.  In the
++% I think something like @@colophon should be in texinfo.  In the
+ % meantime:
+ \long\def\colophon{\hbox to0pt{}\vfill
+ \centerline{The body of this manual is set in}
+@@ -146,7 +146,7 @@ For such platforms, the long double math functions are implemented as calls to t
+ \centerline{{\sl\fontname\tensl\/}}
+ \centerline{are used for emphasis.}\vfill}
+ \page\colophon
+-% Blame: pesch@cygnus.com, 28mar91.
++% Blame: pesch@@cygnus.com, 28mar91.
+ @end tex
+ 
+ @contents
+diff --git a/newlib/libm/math/math.tex b/newlib/libm/math/math.tex
+index 608268a..262538e 100644
+--- a/newlib/libm/math/math.tex
++++ b/newlib/libm/math/math.tex
+@@ -162,58 +162,167 @@ registered trademark of The IEEE.
+ @c to reflect function name of Bessel (as opposed to j; e.g. after atanh,
+ @c before cbrt).
+ 
+-@page @include   math/w_acos.def
+-@page @include   math/w_acosh.def
+-@page @include   math/w_asin.def
+-@page @include   math/s_asinh.def
+-@page @include   math/s_atan.def
+-@page @include   math/w_atan2.def
+-@page @include   math/w_atanh.def
+-@page @include   math/w_j0.def
+-@page @include common/s_cbrt.def
+-@page @include common/s_copysign.def
+-@page @include   math/w_cosh.def
+-@page @include   math/s_erf.def
+-@page @include   math/w_exp.def
+-@page @include   math/w_exp2.def
+-@page @include common/s_expm1.def
+-@page @include   math/s_fabs.def
+-@page @include common/s_fdim.def
+-@page @include   math/s_floor.def
+-@page @include common/s_fma.def
+-@page @include common/s_fmax.def
+-@page @include common/s_fmin.def
+-@page @include   math/w_fmod.def
+-@page @include   math/s_frexp.def
+-@page @include   math/w_gamma.def
+-@page @include   math/w_hypot.def
+-@page @include common/s_ilogb.def
+-@page @include common/s_infinity.def
+-@page @include   common/isgreater.def
+-@page @include common/s_isnan.def
+-@page @include   math/s_ldexp.def
+-@page @include   math/w_log.def
+-@page @include   math/w_log10.def
+-@page @include common/s_log1p.def
+-@page @include common/s_log2.def
+-@page @include common/s_logb.def
+-@page @include common/s_lrint.def
+-@page @include common/s_lround.def
+-@page @include common/s_matherr.def
+-@page @include common/s_modf.def
+-@page @include common/s_nan.def
+-@page @include common/s_nearbyint.def
+-@page @include common/s_nextafter.def
+-@page @include   math/w_pow.def
+-@page @include   math/w_remainder.def
+-@page @include common/s_remquo.def
+-@page @include common/s_rint.def
+-@page @include common/s_round.def
+-@page @include common/s_scalbn.def
+-@page @include common/s_signbit.def
+-@page @include   math/s_sin.def
+-@page @include   math/w_sinh.def
+-@page @include   math/w_sqrt.def
+-@page @include   math/s_tan.def
+-@page @include   math/s_tanh.def
+-@page @include common/s_trunc.def
++@page
++@include   math/w_acos.def
++
++@page
++@include   math/w_acosh.def
++
++@page
++@include   math/w_asin.def
++
++@page 
++@include   math/s_asinh.def
++
++@page
++@include   math/s_atan.def
++
++@page 
++@include   math/w_atan2.def
++
++@page
++@include   math/w_atanh.def
++
++@page 
++@include   math/w_j0.def
++
++@page
++@include common/s_cbrt.def
++
++@page
++@include common/s_copysign.def
++
++@page
++@include   math/w_cosh.def
++
++@page
++@include   math/s_erf.def
++
++@page
++@include   math/w_exp.def
++
++@page
++@include   math/w_exp2.def
++
++@page
++@include common/s_expm1.def
++
++@page
++@include   math/s_fabs.def
++
++@page
++@include common/s_fdim.def
++
++@page
++@include   math/s_floor.def
++
++@page
++@include common/s_fma.def
++
++@page
++@include common/s_fmax.def
++
++@page
++@include common/s_fmin.def
++
++@page
++@include   math/w_fmod.def
++
++@page
++@include   math/s_frexp.def
++
++@page
++@include   math/w_gamma.def
++
++@page
++@include   math/w_hypot.def
++
++@page
++@include common/s_ilogb.def
++
++@page
++@include common/s_infinity.def
++
++@page
++@include   common/isgreater.def
++
++@page
++@include common/s_isnan.def
++
++@page
++@include   math/s_ldexp.def
++
++@page
++@include   math/w_log.def
++
++@page
++@include   math/w_log10.def
++
++@page
++@include common/s_log1p.def
++
++@page
++@include common/s_log2.def
++
++@page
++@include common/s_logb.def
++
++@page
++@include common/s_lrint.def
++
++@page
++@include common/s_lround.def
++
++@page
++@include common/s_matherr.def
++
++@page
++@include common/s_modf.def
++
++@page
++@include common/s_nan.def
++
++@page
++@include common/s_nearbyint.def
++
++@page
++@include common/s_nextafter.def
++
++@page
++@include   math/w_pow.def
++
++@page
++@include   math/w_remainder.def
++
++@page
++@include common/s_remquo.def
++
++@page
++@include common/s_rint.def
++
++@page
++@include common/s_round.def
++
++@page
++@include common/s_scalbn.def
++
++@page
++@include common/s_signbit.def
++
++@page
++@include   math/s_sin.def
++
++@page
++@include   math/w_sinh.def
++
++@page
++@include   math/w_sqrt.def
++
++@page
++@include   math/s_tan.def
++
++@page
++@include   math/s_tanh.def
++
++@page
++@include common/s_trunc.def
