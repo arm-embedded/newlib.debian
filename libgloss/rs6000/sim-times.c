@@ -1,6 +1,10 @@
-/* Time support routines for PowerPC.
+/* sim-times.c - times support routines for PowerPC.
  *
  * Written by Aldy Hernandez.
+ *
+ * This file is licensed with the default Red Hat license
+ * found in COPYING.NEWLIB.
+ * http://sourceware.org/cgi-bin/cvsweb.cgi/src/COPYING.NEWLIB?rev=1.32&content-type=text/x-cvsweb-markup&cvsroot=src
  */
 
 #include <_ansi.h>
