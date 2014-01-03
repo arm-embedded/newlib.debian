@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+
+update-alternatives --install /usr/lib/arm-none-eabi/lib gcc-arm-none-eabi-lib /usr/lib/arm-none-eabi/newlib 30
+
+#DEBHELPER#
+
+exit 0
