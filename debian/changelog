@@ -1,3 +1,15 @@
+newlib (2.1.0-1) unstable; urgency=medium
+
+  * Missing "/" in debian/watch file
+  * Imported Upstream version 2.1.0
+  * Remove patches applied to documentation
+  * Patch fix wrong path to libgloss/config/default.mh
+  * Enable interwork support
+  * Patch to build documentation
+  * Add paths as default C standard library using update-alternatives
+
+ -- Agustin Henze <tin@debian.org>  Fri, 03 Jan 2014 14:18:37 -0300
+
 newlib (2.0.0-1) unstable; urgency=low
 
   * New upstream release.
