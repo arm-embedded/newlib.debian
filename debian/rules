@@ -33,6 +33,7 @@ CONFIGURE_FLAGS = \
 	--with-pkgversion=$(DVERSION) \
 	--enable-newlib-io-long-long \
 	--enable-newlib-register-fini \
+	--enable-interwork \
 	--disable-newlib-supplied-syscalls \
 	--disable-nls \
 	$(CFLAGS) \
