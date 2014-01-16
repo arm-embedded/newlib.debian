@@ -1,3 +1,11 @@
+newlib (2.1.0-2) unstable; urgency=medium
+
+  * Fix missing directory (Closes: #734551)
+  * FTBFS install target doesn't work in parallel (Closes: #735145)
+  * Remove interwork support
+
+ -- Agustin Henze <tin@debian.org>  Wed, 15 Jan 2014 14:32:39 -0300
+
 newlib (2.1.0-1) unstable; urgency=medium
 
   * Missing "/" in debian/watch file
