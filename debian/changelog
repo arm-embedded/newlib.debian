@@ -1,3 +1,11 @@
+newlib (2.1.0-3) unstable; urgency=medium
+
+  * Fix unowned directory after purge (Closes: #736685)
+  * Add newlib-source package requested by (Luca Bruno) the maintainer of the
+    msp430 toolchain
+
+ -- Agustin Henze <tin@debian.org>  Mon, 27 Jan 2014 14:41:39 -0300
+
 newlib (2.1.0-2) unstable; urgency=medium
 
   * Fix missing directory (Closes: #734551)
