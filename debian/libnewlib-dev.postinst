@@ -1,8 +1,10 @@
 #!/bin/sh
 set -e
 
-mkdir -p /usr/lib/arm-none-eabi
-update-alternatives --install /usr/lib/arm-none-eabi/include gcc-arm-none-eabi-include /usr/include/newlib 30
+update-alternatives --quiet --install \
+    /usr/lib/arm-none-eabi/include \
+    gcc-arm-none-eabi-include \
+    /usr/include/newlib 30
 
 #DEBHELPER#
 

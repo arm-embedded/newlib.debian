@@ -4,7 +4,9 @@ set -e
 case "$1" in
   # only remove in remove/deconfigure so we don't disrupt users' preferences
   remove|deconfigure)
-    update-alternatives --remove gcc-arm-none-eabi-include /usr/include/newlib
+    update-alternatives --quiet --remove \
+        gcc-arm-none-eabi-include \
+        /usr/include/newlib
     ;;
 
   upgrade|failed-upgrade)
