@@ -7,6 +7,8 @@
 DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 PACKAGE_NAME := $(shell dpkg-parsechangelog | sed -n -e's/^Source: \(.*\)\+/\1/p')
 DVERSION := $(shell dpkg-parsechangelog | grep ^Version | sed -e 's/^Version: //')
+UVERSION := $(shell echo $(DVERSION) | cut -d- -f1)
+P_SRC := debian/newlib-source
 TARGET := arm-none-eabi
 CFLAGS := CFLAGS="-g -O2 -fno-unroll-loops -ffunction-sections -fdata-sections"
 TARGET_TOOLS =  \
@@ -44,13 +46,22 @@ CONFIGURE_FLAGS = \
 override_dh_clean:
 	dh_clean
 	rm -rf build
+	rm -rf $(P_SRC)
 
 override_dh_auto_configure:
 	dh_auto_configure -Bbuild -- $(CONFIGURE_FLAGS)
 
 override_dh_auto_install:
 	dh_auto_install --max-parallel=1
-	find debian/libnewlib-dev -type d -empty -delete
+	rm -rf debian/libnewlib-dev/usr/include/newlib/bits
+	rm -rf debian/libnewlib-dev/usr/include/newlib/rpc
+	# Build newlib-source package
+	mkdir -p $(P_SRC)/usr/src/newlib
+	cp ../newlib_$(UVERSION).orig.tar.gz $(P_SRC)/usr/src/newlib/newlib-$(UVERSION).tar.gz
+	gunzip $(P_SRC)/usr/src/newlib/newlib-$(UVERSION).tar.gz
+	xz -z $(P_SRC)/usr/src/newlib/newlib-$(UVERSION).tar
+	mkdir -p $(P_SRC)/usr/src/newlib/patches
+	cp debian/patches/* $(P_SRC)/usr/src/newlib/patches
 
 override_dh_installchangelogs:
 	dh_installchangelogs ChangeLog

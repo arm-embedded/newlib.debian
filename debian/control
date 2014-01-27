@@ -9,6 +9,7 @@ Build-Depends:
  autotools-dev,
  dejagnu,
  gcc-arm-none-eabi,
+ xz-utils,
 Standards-Version: 3.9.5
 Homepage: https://sourceware.org/newlib/
 Vcs-Git: git://anonscm.debian.org/collab-maint/newlib.git
@@ -53,3 +54,14 @@ Description: C library and math library compiled for bare metal using Cortex A/R
  .
  This package contains the newlib library compiled for Cortex-A*,
  Cortex-R4/R5/R7 and Cortex-M0/M0+/M3/M4 targets.
+
+Package: newlib-source
+Architecture: all
+Recommends: xz-utils
+Depends: ${misc:Depends}
+Description: C library and math library intended for use on embedded systems (source)
+ Newlib is a C library and math library intended for use on embedded systems.
+ It is a conglomeration of several library parts, all under free software
+ licenses that make them easily usable on embedded products.
+ .
+ This package contains the newlib library source tarball.
