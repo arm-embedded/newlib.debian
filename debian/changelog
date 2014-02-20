@@ -1,3 +1,9 @@
+newlib (2.1.0-4) unstable; urgency=medium
+
+  * Applying patches from upstream repository
+
+ -- Agustin Henze <tin@debian.org>  Thu, 20 Feb 2014 14:25:48 -0300
+
 newlib (2.1.0-3) unstable; urgency=medium
 
   * Fix unowned directory after purge (Closes: #736685)
