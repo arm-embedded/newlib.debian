@@ -10,6 +10,8 @@ Build-Depends:
  dejagnu,
  gcc-arm-none-eabi,
  xz-utils,
+ libisl-dev,
+ libcloog-isl-dev,
 Standards-Version: 3.9.5
 Homepage: https://sourceware.org/newlib/
 Vcs-Git: git://anonscm.debian.org/collab-maint/newlib.git
@@ -45,7 +47,7 @@ Package: libnewlib-arm-none-eabi
 Architecture: all
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}, libnewlib-dev
-Recommends: gcc-arm-none-eabi
+Recommends: gcc-arm-none-eabi, libstdc++-arm-none-eabi-newlib
 Suggests: libnewlib-doc
 Description: C library and math library compiled for bare metal using Cortex A/R/M
  Newlib is a C library and math library intended for use on embedded systems.
