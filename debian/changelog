@@ -1,3 +1,18 @@
+newlib (2.1.0-6) unstable; urgency=medium
+
+  * Update patches from upstream repository
+  * Add recommends on libstdc++-arm-none-eabi-newlib at
+    libnewlib-arm-none-eabi package
+  * Add bdepends on libisl-dev and libcloog-isl-dev
+
+ -- Agustin Henze <tin@debian.org>  Fri, 13 Jun 2014 17:54:58 -0300
+
+newlib (2.1.0-5) unstable; urgency=medium
+
+  * Update patches from upstream repository
+
+ -- Agustin Henze <tin@debian.org>  Tue, 25 Feb 2014 10:09:17 -0300
+
 newlib (2.1.0-4) unstable; urgency=medium
 
   * Applying patches from upstream repository
