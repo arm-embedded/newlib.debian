@@ -1,6 +1,7 @@
 newlib (2.1.0+git20140818.1a8323b-1) UNRELEASED; urgency=medium
 
-  * New upstream snapshot.
+  * New upstream snapshot:
+    + Drop merged patches.
 
  -- Thomas Preud'homme <thomas.preudhomme@arm.com>  Mon, 18 Aug 2014 07:35:46 +0000
 
