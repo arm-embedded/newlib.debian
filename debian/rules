@@ -10,7 +10,16 @@ DVERSION := $(shell dpkg-parsechangelog | grep ^Version | sed -e 's/^Version: //
 UVERSION := $(shell echo $(DVERSION) | cut -d- -f1)
 P_SRC := debian/newlib-source
 TARGET := arm-none-eabi
-CFLAGS := CFLAGS="-g -O2 -fno-unroll-loops -ffunction-sections -fdata-sections"
+
+TOP_DIR := $(shell pwd)
+BUILD_DIR := $(TOP_DIR)/build/
+BUILD_NANO_DIR := $(TOP_DIR)/build_nano/
+TMP_DIR := debian/tmp
+TMP_NANO_DIR := debian/tmp_nano
+
+CFLAGS := CFLAGS="-g -O2 -ffunction-sections -fdata-sections"
+CFLAGS_NANO := CFLAGS="-g -Os -ffunction-sections -fdata-sections"
+
 TARGET_TOOLS =  \
 				CC_FOR_TARGET=$(TARGET)-gcc \
 				GCC_FOR_TARGET=$(TARGET)-gcc \
@@ -40,21 +49,56 @@ CONFIGURE_FLAGS = \
 	$(CFLAGS) \
 	$(TARGET_TOOLS)
 
+CONFIGURE_FLAGS_NANO = \
+	--host=$(DEB_HOST_MULTIARCH) \
+	--target=$(TARGET) \
+	--prefix=/usr/lib \
+	--libdir=/usr/lib \
+	--infodir=/usr/share/doc/$(PACKAGE_NAME)/info \
+	--mandir=/usr/share/man \
+	--htmldir=/usr/share/doc/$(PACKAGE_NAME)/html \
+	--pdfdir=/usr/share/doc/$(PACKAGE_NAME)/pdf \
+	--with-pkgversion=$(DVERSION) \
+	--disable-newlib-supplied-syscalls \
+	--enable-newlib-reent-small \
+	--disable-newlib-fvwrite-in-streamio \
+	--disable-newlib-fseek-optimization \
+	--disable-newlib-wide-orient \
+	--enable-newlib-nano-malloc \
+	--disable-newlib-unbuf-stream-opt \
+	--enable-lite-exit \
+	--enable-newlib-global-atexit \
+	--disable-nls \
+	$(CFLAGS_NANO) \
+	$(TARGET_TOOLS)
+
 %:
-	dh $@ -Bbuild --with autotools-dev --parallel
+	dh $@ -B$(BUILD_DIR) --with autotools-dev --parallel
 
 override_dh_clean:
 	dh_clean
-	rm -rf build
-	rm -rf $(P_SRC)
+	rm -rf $(BUILD_DIR) $(BUILD_NANO_DIR) $(TMP_NANO_DIR) $(P_SRC)
 
 override_dh_auto_configure:
-	dh_auto_configure -Bbuild -- $(CONFIGURE_FLAGS)
+	dh_auto_configure -B$(BUILD_DIR) -- $(CONFIGURE_FLAGS)
+	dh_auto_configure -B$(BUILD_NANO_DIR) -- $(CONFIGURE_FLAGS_NANO)
+
+override_dh_auto_test:
+	dh_auto_test -B$(BUILD_DIR)
+	dh_auto_test -B$(BUILD_NANO_DIR)
+
+override_dh_auto_build:
+	dh_auto_build -B$(BUILD_DIR)
+	dh_auto_build -B$(BUILD_NANO_DIR)
 
 override_dh_auto_install:
-	dh_auto_install --max-parallel=1
-	rm -rf debian/libnewlib-dev/usr/include/newlib/bits
-	rm -rf debian/libnewlib-dev/usr/include/newlib/rpc
+	dh_auto_install -B$(BUILD_DIR) --max-parallel=1
+	dh_auto_install -B$(BUILD_NANO_DIR) --destdir debian/tmp_nano --max-parallel=1
+	#
+	# Rename nano lib* files to lib*_nano
+	find $(TMP_NANO_DIR) -regex ".*/lib\(c\|g\|rdimon\)\.a" \
+		-exec rename 's@$(TMP_NANO_DIR)/(.*).a@$(TMP_DIR)/$$1_nano.a@' \{\} \+
+	#
 	# Build newlib-source package
 	mkdir -p $(P_SRC)/usr/src/newlib
 	cp ../newlib_$(UVERSION).orig.tar.xz $(P_SRC)/usr/src/newlib/newlib-$(UVERSION).tar.xz
@@ -65,7 +109,7 @@ override_dh_installchangelogs:
 
 override_dh_installdocs:
 	set -ex; \
-		cd build/$(TARGET)/newlib; \
+		cd $(BUILD_DIR)/$(TARGET)/newlib; \
 		make html-recursive; \
 		cd -;
 	dh_installdocs
