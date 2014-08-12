@@ -57,9 +57,7 @@ override_dh_auto_install:
 	rm -rf debian/libnewlib-dev/usr/include/newlib/rpc
 	# Build newlib-source package
 	mkdir -p $(P_SRC)/usr/src/newlib
-	cp ../newlib_$(UVERSION).orig.tar.gz $(P_SRC)/usr/src/newlib/newlib-$(UVERSION).tar.gz
-	gunzip $(P_SRC)/usr/src/newlib/newlib-$(UVERSION).tar.gz
-	xz -z $(P_SRC)/usr/src/newlib/newlib-$(UVERSION).tar
+	cp ../newlib_$(UVERSION).orig.tar.xz $(P_SRC)/usr/src/newlib/newlib-$(UVERSION).tar.xz
 	[ -d debian/patches ] && cp -r debian/patches $(P_SRC)/usr/src/newlib/patches || true
 
 override_dh_installchangelogs:
