@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013 Andes Technology Corporation.
+Copyright (c) 2013-2014 Andes Technology Corporation.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ##
 ##==============================================================================
 
-
 ##------------------------------------------------------------------------------
 ## Vector table setup
 ##------------------------------------------------------------------------------
@@ -48,50 +47,61 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ##------------------------------------------------------------------------------
 	.section	.text
 	.weak	_SDA_BASE_
-	.weak	_FP_BASE_
 	.global	_start
 	.type	_start, @function
 	.align	2
 _start:
-.L_fp_gp_lp_init:
-	/* Initialization for $fp, $gp, and $lp. The _SDA_BASE_ location
-	   stands for Small Data Access.  */
-	la	$fp, _FP_BASE_
-	la	$gp, _SDA_BASE_
-	movi	$lp, #0
+	/* The initialization sequence really does matter !!!
+	   The global pointer must be
+	   initialized precedence over all others.  */
 
-.L_stack_init:
-	/* Initialization for $sp and make sure it is 8-byte aligned.  */
+.L_init_gp:
+	/* Initialization for global pointer.  The symbol _SDA_BASE_ is
+	   determined by Linker.  SDA stands for Small Data Access.  */
+	la	$gp, _SDA_BASE_
+
+.L_init_sp:
+	/* Initialization for stack pointe.  The symbol _stack is defined
+	   in linker script.  Make sure $sp is 8-byte aligned.  */
 	la	$sp, _stack
+#if __NDS32_ISA_V3__
+	bitci	$sp, $sp, #7
+#else
 	movi	$r0, #-8		/* Set $r0 as 0xFFFFFFF8.  */
 	and	$sp, $sp, $r0
+#endif
 
-.L_bss_clear:
-        /* Clear bss section.  */
-        la      $r3, _end
-        la      $r0, _edata
-	beq	$r0, $r3, .L_call_main	/* Branch if no bss.  */
-        sub     $r1, $r3, $r0           /* Size to be clear.  */
+#if __NDS32_EX9_EXT__
+.L_init_itb:
+	/* Initialization for Instruction Table Base (ITB).
+	   The symbol $_ITB_BASE_ is determined by Linker.
+	   Set $ITB only if MSC_CFG.EIT (cr4.b'24) is set.  */
+	mfsr    $r0, $MSC_CFG
+	srli    $r0, $r0, 24
+	andi    $r0, $r0, 0x1
+	beqz    $r0, .L_zero_out_bss	/* Fall through ?  */
+	la      $r0, $_ITB_BASE_
+	mtusr   $r0, $ITB
+#endif
 
-        /* Set $r2 as how many words to be clear.
-           Set $r1 as how many bytes are less than a woard to be clear.  */
-        srli    $r2, $r1, #2
-        andi    $r1, $r1, #3
-        beqz    $r3, .Lbyte_clear
-
-        la      $r4, #0x00000000
+.L_zero_out_bss:
+	/* Zero out the bss section.
+	   Equivalence C code for follow part:
+	   if (_end == _edata) goto .L_call_main
+	   unsinged int *ptr = _edata;
+	   while (ptr != _end)
+	     *ptr++ = 0
+	   $r0 = ptr/_edata
+	   $r1 = _end
+	   $r2 = 0
+	 */
+	la	$r0, _edata
+	la	$r1, _end
+	beq	$r0, $r1, .L_call_main	/* Branch if no bss.  */
+	movi	$r2, #0
 .Lword_clear:
-        swi.bi  $r4, [$r0], #4
-        addi    $r2, $r2, #-1
-        bnez    $r2, .Lword_clear       /* Loop again ?  */
-        beqz    $r1, .Lend_bss
-
-.Lbyte_clear:
-        sbi.bi  $r4, [$r0], #1
-        addi    $r1, $r1, #-1
-        bnez    $r1, .Lbyte_clear
-.Lend_bss:
-
+	swi.bi	$r2, [$r0], #4
+	bne	$r0, $r1, .Lword_clear
 
 .L_call_main:
 	/* Call '_init' to invoke constructors.  */
@@ -100,9 +110,14 @@ _start:
 	   exit() has been reached.  */
 	la	$r0, _fini
 	jal	atexit
+	/* Prepare argc/argv/env for main function.
+	   Since there is no operating system so far,
+	   we set $r0, $r1, and $r2 to be zero.  */
+	movi	$r0, 0
+	movi	$r1, 0
+	movi	$r2, 0
 	/* Call 'main'.  */
-	la	$r15, main
-	jral	$r15
+	bal	main
 
 .L_terminate_program:
 	/* There are two ways to terminate program:
@@ -113,11 +128,11 @@ _start:
 	    Currently, we use option 2 as a solution to follow C99 5.1.2.2.3,
 	    but aware that general exit() will do some cleanup procedures
 	    which may result in large-memory-footprints.  */
-	la	$r15, exit
-	jral	$r15
+	
+	bal	exit
 
 .L_forever_loop:
 	/* Should never return here.  */
-        b       .L_forever_loop
+	b	.L_forever_loop
 
 	.size	_start, .-_start
