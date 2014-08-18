@@ -60,8 +60,7 @@ override_dh_auto_install:
 	cp ../newlib_$(UVERSION).orig.tar.gz $(P_SRC)/usr/src/newlib/newlib-$(UVERSION).tar.gz
 	gunzip $(P_SRC)/usr/src/newlib/newlib-$(UVERSION).tar.gz
 	xz -z $(P_SRC)/usr/src/newlib/newlib-$(UVERSION).tar
-	mkdir -p $(P_SRC)/usr/src/newlib/patches
-	cp debian/patches/* $(P_SRC)/usr/src/newlib/patches
+	[ -d debian/patches ] && cp -r debian/patches $(P_SRC)/usr/src/newlib/patches || true
 
 override_dh_installchangelogs:
 	dh_installchangelogs ChangeLog
