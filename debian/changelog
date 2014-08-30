@@ -1,4 +1,4 @@
-newlib (2.1.0+git20140818.1a8323b-1) UNRELEASED; urgency=medium
+newlib (2.1.0+git20140818.1a8323b-1) unstable; urgency=medium
 
   * New upstream snapshot:
     + Drop merged patches.
