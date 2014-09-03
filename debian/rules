@@ -68,6 +68,7 @@ CONFIGURE_FLAGS_NANO = \
 	--disable-newlib-unbuf-stream-opt \
 	--enable-lite-exit \
 	--enable-newlib-global-atexit \
+	--enable-newlib-nano-formatted-io \
 	--disable-nls \
 	$(CFLAGS_NANO) \
 	$(TARGET_TOOLS)

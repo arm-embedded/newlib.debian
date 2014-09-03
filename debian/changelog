@@ -1,3 +1,9 @@
+newlib (2.1.0+git20140818.1a8323b-2) UNRELEASED; urgency=medium
+
+  * Enable newlib nano formatted IO feature for the size optimized version.
+
+ -- Thomas Preud'homme <thomas.preudhomme@arm.com>  Wed, 03 Sep 2014 04:46:14 +0000
+
 newlib (2.1.0+git20140818.1a8323b-1) unstable; urgency=medium
 
   * New upstream snapshot:
