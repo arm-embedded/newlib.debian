@@ -1,3 +1,42 @@
+2014-11-28  Jaydeep Patil  <jaydeep.patil@imgtec.com>
+	    Matthew Fortune  <Matthew.Fortune@imgtec.com>
+
+	* mips/crt0.S: Configure processor based on .MIPS.abiflags.
+	Remove FPU availability check, just use the pre-processor flags
+	to indicicate what the user wanted.
+	* mips/abiflags.S: New file.
+	* mips/regs.S (SR_MSA): Define macro.
+	* mips/mti32.ld: Place .MIPS.abiflags and wrap in marker symbols.
+	* mips/mti64.ld: Likewise.
+	* mips/mti64_64.ld: Likewise.
+	* mips/mti64_n32.ld: Likewise.
+
+2014-11-26  Matthew Fortune  <Matthew.Fortune@imgtec.com>
+
+	* mips/crt0.S: Remove .set noreorder throughout.
+	(zerobss): Open code the bltu macro instruction so that the
+	zero-loop does not have a NOP in the branch delay slot.
+
+2014-11-13  Nick Clifton  <nickc@redhat.com>
+
+	* msp430/Makefile.in (CRT_OBJS): Add crt_high_bss.o.
+	* msp430/crt0.S (high_bss): Add.
+	* msp430/msp430-sim.ld: Add error message if .upper sections are
+	detected.
+	* msp430/msp430xl-sim.ld (MEMORY): Adjust to better mimic real
+	life MCUs.  Add support for upper and lower sections.
+
+2014-10-22  Tim Harder  <radhermit@gmail.com>
+
+	* msp430/Makefile.in: Respect DESTDIR during install.
+
+2014-09-22  Peter A. Bigot  <pab@pabigot.com>
+
+	* configure.in: Remove config_libnosys=false
+	* configure: Regenerated.
+	* msp430/nosyscalls.S: Rename to ciosyscalls.S
+	* msp430/Makefile.in: Change LIBNOSYS to LIB_CIO.
+
 2014-08-14  Bin Cheng  <bin.cheng@arm.com>
 
 	* arm/elf-nano.specs: New file.

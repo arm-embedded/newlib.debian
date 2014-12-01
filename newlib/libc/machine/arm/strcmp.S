@@ -64,8 +64,16 @@
 	|| (__ARM_ARCH == 6 && __ARM_ARCH_PROFILE == 'M')
 
 # if defined (__thumb__) && !defined (__thumb2__)
-/* Thumb1 only variant.  */
-#  include "strcmp-armv4t.S"
+/* Thumb1 only variant.  If size is preferred, use strcmp-armv4t.S.
+   If speed is preferred, the strcmp function in strcmp-armv6m.S
+   will be used.  */
+
+#  if defined (__OPTIMIZE_SIZE__) || defined (PREFER_SIZE_OVER_SPEED)
+#   include "strcmp-armv4t.S"
+#  else
+#   include "strcmp-armv6m.S"
+#  endif
+
 # else
 #  include "strcmp-arm-tiny.S"
 # endif

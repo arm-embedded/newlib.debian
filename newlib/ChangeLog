@@ -1,3 +1,254 @@
+2014-11-28  Matthew Fortune  <matthew.fortune@imgtec.com>
+
+	* libc/include/machine/setjmp.h [__mips__]: Remove __mips_fpr == 64
+	from the 64-bit _JBTYPE definition.
+	* libc/machine/mips/setjmp.S: Re-work the o32 FP64 support to match
+	the now one-and-only supported o32 FP64 ABI extension.  Also
+	support o32 FPXX.
+
+2014-11-26  Hale Wang  <hale.wang@arm.com>
+
+	* libc/machine/arm/strcmp-armv6m.S: New file.
+	* libc/machine/arm/strcmp.S: Add new wrapper.
+	* libc/machine/arm/Makefile.am: Add dependencies.
+	* libc/machine/arm/Makefile.in: Regenerated.
+
+2014-11-25  Corinna Vinschen  <vinschen@redhat.com>
+
+	* libc/include/sys/_default_fcntl.h: Move all Cygwin-specific open
+	flags from Cygwin's fcntl.h here.  Remove check for WIN32.  Remove
+	Windows-specific macros.
+
+2014-11-23  Joel Sherrill <joel.sherrill@oarcorp.com>
+
+	* libc/include/sys/resource.h: Add prototype for getrusage()
+	to <sys/resource.h>
+
+2014-11-21  Nick Clifton  <nickc@redhat.com>
+
+	PR target/63901
+	* configure.host (msp430): Add -mhwmult=none to newlib_cflags.
+
+2014-11-20  Peter A. Bigot  <pab@pabigot.com>
+
+	* libc/stdio/nano-vfprintf_i.c (_printf_i): Use LONGINT when void* is
+	larger than an int.
+
+2014-11-20  Sebastian Huber  <sebastian.huber@embedded-brains.de>
+
+	* libc/sys/rtems/sys/syslimits.h (NGROUPS_MAX): Adjust value so
+	that NGROUPS is even.
+
+2014-11-12  Jon Beniston  <jon@beniston.com>
+
+	* libc/stdlib/strtod.c (sulp): Cast to int32_t to avoid overflow.
+	* libc/time/gmtime_r.c (DAYS_PER_*_YEARS): Convert to long constants
+	to avoid overflow.
+
+2014-11-10  Richard Earnshaw  <rearnsha@arm.com>
+
+	* libc/machine/aarch64/strcpy.S: New file.
+	* libc/machine/aarch64/strcpy-stub.S: New file.
+	* libc/machine/aarch64/Makefile.am (lib_a_SOURCES): Add new files.
+	* libc/machine/aarch64/Makefile.in: Regenerate.
+
+2014-11-06  Joel Sherrill <joel.sherrill@oarcorp.com>
+
+	* configure.in: Add autoconf test to determine size of uintptr_t.
+	* newlib.hin: Add new autoconf feature variables.
+	* libc/include/inttypes.h: Use new feature variables.
+	* configure: Regenerate.
+
+2014-11-06  Terry Guo  <terry.guo@arm.com>
+
+	* libc/stdio/nano-vfprintf_i.c (_printf_i): Use Newlib approach to
+	handle string that might be not nul-terminated.
+	* testsuite/newlib.stdio/nulprintf.c: New test.
+
+2014-10-29  Jon Turney  <jon.turney@dronecode.org.uk>
+
+	* libc/include/string.h: Correct guard for strcasecmp().
+
+2014-10-29  Terry Guo  <terry.guo@arm.com>
+
+	* libc/stdio/vfprintf.c (_VFPRINTF_R): Remove unnecessary comparison.
+
+2014-10-27  Sebastian Huber  <sebastian.huber@embedded-brains.de>
+
+	* libc/include/sys/unistd.h (sethostname): Declare if
+	requested.
+
+2014-10-20  Freddie Chopin  <freddie_chopin@op.pl>
+
+	* libc/time/gmtime_r.c (gmtime_r): Remove dead code.
+
+2014-10-16  Sebastian Huber  <sebastian.huber@embedded-brains.de>
+
+	* libc/unix/getcwd.c (getcwd): Close directory also in case of an error.
+
+2014-10-10  Thomas Uhle <thomas.uhle@eas.iis.fraunhofer.de>
+
+	* libc/include/_ansi.h: _LONG_LONG_TYPE definition removed.
+	* libc/include/math.h: _LONG_LONG_TYPE replaced by "long long".
+	Guards for C99 and C++11 functions fixed.
+	* libc/include/stdlib.h: Guards for C99 and C++11 functions fixed.
+
+2014-10-09  Sebastian Huber  <sebastian.huber@embedded-brains.de>
+
+	* libc/include/stdint.h: Include <sys/_intsup.h>.
+	(__STDINT_EXP): Delete.
+	(__have_long32): Likewise.
+	(__have_long64): Likewise.
+	(__have_longlong64): Likewise.
+	* libc/include/sys/_intsup.h: New file.
+	(__STDINT_EXP): Move from libc/include/stdint.h.
+	(__have_long32): Likewise.
+	(__have_long64): Likewise.
+	(__have_longlong64): Likewise.
+	* libc/include/inttypes.h: Include <sys/_intsup.h>.
+	(__INTTYPES_EXP): Delete and use __STDINT_EXP() instead.
+
+2014-10-09  Freddie Chopin  <freddie_chopin@op.pl>
+
+	* libc/string/memccpy.c (memccpy): Fix warning about signed-unsigned
+	comparison
+	* libc/string/memchr.c (memchr): Ditto.
+	* libc/string/memrchr.c (memrchr): Ditto.
+	* libc/string/memset.c: (memset): Ditto.
+	* libc/string/rawmemchr.c (rawmemchr): Ditto.
+	* libc/string/local.h (__locale_cjk_lang): Fix "function declaration
+	isn't a prototype" warning.
+	* libc/string/strcasestr.c (strcasestr): Ditto.
+	* libc/string/u_strerr.c (_user_strerror): Fix "unused parameter"
+	warnings.
+	* libc/string/rawmemchr.c (rawmemchr): Fix comment type
+	"// ..." -> "/* ... */".
+
+2014-10-08  Steve Ellcey  <sellcey@mips.com>
+
+	* newlib/libc/machine/mips/strcmp.c: Remove.
+	* newlib/libc/machine/mips/strcmp.S: New.
+	* newlib/libc/machine/mips/Makefile.am (lib_a_SOURCES):
+	Replace strcmp.c with strcmp.S
+	* newlib/libc/machine/mips/Makefile.in: Regenerate.
+
+2014-10-08 Corinna Vinschen  <vinschen@redhat.com>
+
+	* libc/include/string.h (ffsl): Declare as GNU function.
+	(ffsll): Ditto.
+
+2014-09-17  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* libc/include/sys/features.h: Add __NEWLIB__ and
+	__NEWLIB_MINOR__ macros.
+
+2014-09-17  Joel Sherrill <joel.sherrill@oarcorp.com>
+	    Thomas Uhle <thomas.uhle@eas.iis.fraunhofer.de>
+
+	* libc/include/string.h: Correct guard for strnlen().
+
+2014-09-15  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* libc/time/month_lengths.c: Fix to define __month_lengths.
+
+2014-09-12  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* libc/time/tzcalc_limits.c: Fix __month_lengths reference.
+
+2014-09-12  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* libc/time/month_lengths.c: Actually add file this time.
+	* libc/time/tzcalc_limits.c: Ditto.
+
+2014-09-11  Freddie Chopin  <freddie_chopin@op.pl>
+
+	* libc/time/month_lengths.c: New file with __month_lengths array
+	(previously mon_lengths array in mktm_r.c)
+	* libc/time/tzcalc_limits.c: New file with __tzcalc_limits() from
+	mktm_r.c
+	* libc/time/lcltime_r.c (localtime_r): Simplify by changing call to
+	_mktm_r() with call to gmtime_r() and code moved from _mktm_r() which
+	was used to do time zone adjustments
+	* libc/time/gmtime_r.c (gmtime_r): Simplify by moving all relevant
+	code from _mktm_r(), breaking all dependencies on time zone related
+	functions
+	* libc/time/mktm_r.c: Delete file
+	* libc/time/local.h: Update accordingly - remove declaration of
+	_mktm_r(), add declaration of __month_lengths[]
+	* libc/time/Makefile.am: Modify accordingly.
+	* libc/time/Makefile.in: Regenerate.
+
+2014-09-08  Freddie Chopin  <freddie_chopin@op.pl>
+
+	* libc/machine/arm/Makefile.am: Fix typo.
+	* libc/machine/arm/Makefile.in: Regenerated.
+
+2014-09-05  Hale Wang  <hale.wang@arm.com>
+
+	* libc/machine/arm/memchr.S: Clean up the wrapper.
+	* libc/machine/arm/memcpy.S: Likewise.
+	* libc/machine/arm/memchr-stub.c: Delete this redundant file.
+	* libc/machine/arm/memcpy-stub.c: Likewise.
+	* libc/machine/arm/strcmp.S: Add speed-preferred wrapper.
+	* libc/machine/arm/strlen.S: Likewise.
+	* libc/machine/arm/Makefile.am: Add dependencies.
+	* libc/machine/arm/Makefile.in: Regenerated.
+	* libc/machine/arm/configure.in: Add dependencies.
+	* libc/machine/arm/configure: Regenerated.
+
+2014-09-05  Bin Cheng  <bin.cheng@arm.com>
+
+	* libc/stdio/findfp.c (_cleanup_r): Call _fflush_r when configuration
+	option "--enable-lite-exit" is in effect.  Refactor the code.
+
+2014-09-05  Bin Cheng  <bin.cheng@arm.com>
+
+	* libc/stdio/fwalk.c (_fwalk_reent): Remove redundant test.
+
+2014-09-04  Freddie Chopin  <freddie_chopin@op.pl>
+
+	* libc/time/mktm_r.c (_mktm_r): Optimize speed.
+
+2014-09-04  Freddie Chopin  <freddie_chopin@op.pl>
+
+	* libc/time/clock.c (clock): Fix warnings about signed-unsigned
+	comparisons.
+	* libc/time/strftime.c (strftime): Likewise.
+	* libc/time/strptime.c (match_string): Fix warning about discarding
+	'restrict' qualifier from pointer target type.
+
+2014-09-04  Hale Wang  <hale.wang@arm.com>
+
+	* libc/machine/arm/aeabi_memcpy.c: New file.
+	* libc/machine/arm/aeabi_memcpy-armv7a.S: New file.
+	* libc/machine/arm/Makefile.am: Add dependencies.
+	* libc/machine/arm/Makefile.in: Regenerated.
+
+2014-08-27  DJ Delorie  <dj@redhat.com>
+
+	* libc/include/math.h (frexpl): Remove parameter name.
+
+2014-08-19  Richard Earnshaw  <rearnsha@arm.com>
+
+	* libc/machine/aarch64/memchr.S: Add check for zero-sized buffer.
+
+2014-08-18 Corinna Vinschen  <vinschen@redhat.com>
+
+	* libc/include/sys/signal.h: Declare sigaltstack for RTEMS only.
+
+2014-08-18  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* libc/include/sys/config.h[__m68k__]: Set _READ_WRITE_RETURN_TYPE
+	to _ssize_t to match underlying code in libgloss.
+
+2014-08-18 Joel Sherrill <joel.sherrill@oarcorp.com>
+
+	* libc/include/string.h: Improve language and OS standard guards.
+
+2014-08-18 Joel Sherrill <joel.sherrill@oarcorp.com>
+
+	* libc/include/sys/signal.h: Add sigaltstack() support.
+
 2014-08-14  Bin Cheng  <bin.cheng@arm.com>
 
 	* libc/stdio/findfp.c (std): Don't inline when optimizing for code size.
