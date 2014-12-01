@@ -1,3 +1,10 @@
+newlib (2.1.0+git20141201.db59ff3-1) experimental; urgency=medium
+
+  * New upstream snapshot
+  * Bumped Standard-Version to 3.9.6 (no changes required)
+
+ -- Agustin Henze <tin@debian.org>  Mon, 01 Dec 2014 14:25:47 -0300
+
 newlib (2.1.0+git20140818.1a8323b-2) unstable; urgency=medium
 
   [ Thomas Preud'homme ]
