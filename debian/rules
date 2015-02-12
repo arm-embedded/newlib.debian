@@ -100,6 +100,11 @@ override_dh_auto_install:
 	find $(TMP_NANO_DIR) -regex ".*/lib\(c\|g\|rdimon\)\.a" \
 		-exec rename 's@$(TMP_NANO_DIR)/(.*).a@$(TMP_DIR)/$$1_nano.a@' \{\} \+
 	#
+	# Move nano's version of newlib.h to nano/newlib.h
+	mkdir -p $(TMP_DIR)/usr/lib/$(TARGET)/include/nano
+	mv $(TMP_NANO_DIR)/usr/lib/$(TARGET)/include/newlib.h \
+           $(TMP_DIR)/usr/lib/$(TARGET)/include/nano/newlib.h
+	#
 	# Build newlib-source package
 	mkdir -p $(P_SRC)/usr/src/newlib
 	cp ../newlib_$(UVERSION).orig.tar.xz $(P_SRC)/usr/src/newlib/newlib-$(UVERSION).tar.xz
