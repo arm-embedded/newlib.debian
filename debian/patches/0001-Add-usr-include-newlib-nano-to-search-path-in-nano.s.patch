@@ -1,0 +1,28 @@
+From: Jim Paris <jim@jtan.com>
+Date: Thu, 12 Feb 2015 12:54:40 -0500
+Subject: [PATCH 2/2] Add /usr/include/newlib/nano to search path in nano.specs
+
+---
+ libgloss/arm/elf-nano.specs | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/libgloss/arm/elf-nano.specs b/libgloss/arm/elf-nano.specs
+index 60dc407c678b..c96c57aee50b 100644
+--- a/libgloss/arm/elf-nano.specs
++++ b/libgloss/arm/elf-nano.specs
+@@ -1,5 +1,6 @@
+ %rename link                nano_link
+ %rename link_gcc_c_sequence                nano_link_gcc_c_sequence
++%rename cpp                 nano_cpp
+ 
+ *nano_libc:
+ -lc_nano
+@@ -16,3 +17,5 @@
+ *lib:
+ %{!shared:%{g*:-lg_nano} %{!p:%{!pg:-lc_nano}}%{p:-lc_p}%{pg:-lc_p}}
+ 
++*cpp:
++-I/usr/include/newlib/nano %(nano_cpp)
+-- 
+2.1.3
+
