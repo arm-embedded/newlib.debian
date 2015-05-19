@@ -46,7 +46,7 @@ Description: C library and math library intended for use on embedded systems (do
 Package: libnewlib-arm-none-eabi
 Architecture: all
 Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}, libnewlib-dev
+Depends: ${shlibs:Depends}, ${misc:Depends}, libnewlib-dev (= ${binary:Version})
 Recommends: gcc-arm-none-eabi, libstdc++-arm-none-eabi-newlib
 Suggests: libnewlib-doc
 Description: C library and math library compiled for bare metal using Cortex A/R/M
