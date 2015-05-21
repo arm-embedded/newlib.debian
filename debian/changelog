@@ -1,3 +1,15 @@
+newlib (2.1.0+git20141201.db59ff3-2) unstable; urgency=medium
+
+  [ Agustin Henze ]
+  * Fix mismatched version between libnewlib-arm-none-eabi and libnewlib-dev
+    (Closes: #778242)
+
+  [ Jim Paris ]
+  * Add usr include newlib nano to search path in nano.s. Ship nano/newlib.h
+    (Closes: #778248)
+
+ -- Agustin Henze <tin@debian.org>  Tue, 19 May 2015 09:26:28 -0300
+
 newlib (2.1.0+git20141201.db59ff3-1) experimental; urgency=medium
 
   * New upstream snapshot
