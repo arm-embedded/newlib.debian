@@ -1,3 +1,9 @@
+newlib (2.1.0+git20141201.db59ff3-2~bpo8+1) jessie-backports; urgency=medium
+
+  * Rebuild for jessie-backports.
+
+ -- Agustin Henze <tin@debian.org>  Tue, 02 Jun 2015 15:20:32 -0300
+
 newlib (2.1.0+git20141201.db59ff3-2) unstable; urgency=medium
 
   [ Agustin Henze ]
