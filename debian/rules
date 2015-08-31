@@ -18,21 +18,21 @@ TMP_DIR := debian/tmp
 TMP_NANO_DIR := debian/tmp_nano
 
 CFLAGS := CFLAGS="-g -O2 -ffunction-sections -fdata-sections"
-CFLAGS_NANO := CFLAGS="-g -Os -ffunction-sections -fdata-sections"
+CFLAGS_NANO := CFLAGS="-g -Os -ffunction-sections -fdata-sections -fshort-wchar"
 
 TARGET_TOOLS =  \
-				CC_FOR_TARGET=$(TARGET)-gcc \
-				GCC_FOR_TARGET=$(TARGET)-gcc \
-				AR_FOR_TARGET=$(TARGET)-ar \
-				AS_FOR_TARGET=$(TARGET)-as \
-				LD_FOR_TARGET=$(TARGET)-ld \
-				NM_FOR_TARGET=$(TARGET)-nm \
-				OBJDUMP_FOR_TARGET=$(TARGET)-objdump \
-				RANLIB_FOR_TARGET=$(TARGET)-ranlib \
-				READELF_FOR_TARGET=$(TARGET)-readelf \
-				STRIP_FOR_TARGET=$(TARGET)-strip
+	CC_FOR_TARGET=$(TARGET)-gcc \
+	GCC_FOR_TARGET=$(TARGET)-gcc \
+	AR_FOR_TARGET=$(TARGET)-ar \
+	AS_FOR_TARGET=$(TARGET)-as \
+	LD_FOR_TARGET=$(TARGET)-ld \
+	NM_FOR_TARGET=$(TARGET)-nm \
+	OBJDUMP_FOR_TARGET=$(TARGET)-objdump \
+	RANLIB_FOR_TARGET=$(TARGET)-ranlib \
+	READELF_FOR_TARGET=$(TARGET)-readelf \
+	STRIP_FOR_TARGET=$(TARGET)-strip
 
-CONFIGURE_FLAGS = \
+CONFIGURE_COMMON_FLAGS = \
 	--host=$(DEB_HOST_MULTIARCH) \
 	--target=$(TARGET) \
 	--prefix=/usr/lib \
@@ -42,24 +42,17 @@ CONFIGURE_FLAGS = \
 	--htmldir=/usr/share/doc/$(PACKAGE_NAME)/html \
 	--pdfdir=/usr/share/doc/$(PACKAGE_NAME)/pdf \
 	--with-pkgversion=$(DVERSION) \
-	--enable-newlib-io-long-long \
-	--enable-newlib-register-fini \
 	--disable-newlib-supplied-syscalls \
 	--disable-nls \
-	$(CFLAGS) \
 	$(TARGET_TOOLS)
 
+CONFIGURE_FLAGS = \
+	--enable-newlib-io-long-long \
+	--enable-newlib-register-fini \
+	$(CFLAGS) \
+	$(CONFIGURE_COMMON_FLAGS)
+
 CONFIGURE_FLAGS_NANO = \
-	--host=$(DEB_HOST_MULTIARCH) \
-	--target=$(TARGET) \
-	--prefix=/usr/lib \
-	--libdir=/usr/lib \
-	--infodir=/usr/share/doc/$(PACKAGE_NAME)/info \
-	--mandir=/usr/share/man \
-	--htmldir=/usr/share/doc/$(PACKAGE_NAME)/html \
-	--pdfdir=/usr/share/doc/$(PACKAGE_NAME)/pdf \
-	--with-pkgversion=$(DVERSION) \
-	--disable-newlib-supplied-syscalls \
 	--enable-newlib-reent-small \
 	--disable-newlib-fvwrite-in-streamio \
 	--disable-newlib-fseek-optimization \
@@ -69,9 +62,8 @@ CONFIGURE_FLAGS_NANO = \
 	--enable-lite-exit \
 	--enable-newlib-global-atexit \
 	--enable-newlib-nano-formatted-io \
-	--disable-nls \
 	$(CFLAGS_NANO) \
-	$(TARGET_TOOLS)
+	$(CONFIGURE_COMMON_FLAGS)
 
 %:
 	dh $@ -B$(BUILD_DIR) --with autotools-dev --parallel
