@@ -1,3 +1,12 @@
+newlib (2.2.0+git20150830.5a3d536-1) unstable; urgency=medium
+
+  * Imported Upstream version 2.2.0+git20150830.5a3d536
+  * Add -fshort-wchar cflag for newlib-nano building
+  * Remove patch 'Add usr include newlib nano to search path in nano.s'
+    because it was applied in upstream
+
+ -- Agustin Henze <tin@debian.org>  Mon, 31 Aug 2015 10:21:01 -0300
+
 newlib (2.1.0+git20141201.db59ff3-2) unstable; urgency=medium
 
   [ Agustin Henze ]
