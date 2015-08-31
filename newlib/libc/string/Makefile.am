@@ -102,6 +102,7 @@ if ELIX_LEVEL_3
 ELIX_4_SOURCES =
 else
 ELIX_4_SOURCES = \
+	gnu_basename.c \
 	memmem.c \
 	memrchr.c \
 	rawmemchr.c \
@@ -142,7 +143,7 @@ wcsncmp.def	wcsncpy.def	wcsnlen.def	wcspbrk.def \
 wcsrchr.def	wcsspn.def	wcsstr.def 	wcstok.def  \
 wcswidth.def	wcsxfrm.def	wcwidth.def	wmemchr.def \
 wmemcmp.def	wmemcpy.def	wmemmove.def	wmemset.def \
-memmem.def	memrchr.def	rawmemchr.def
+memmem.def	memrchr.def	rawmemchr.def	strchrnul.def
 
 SUFFIXES = .def
 

@@ -20,6 +20,8 @@ lib_a_SOURCES += memmove.S
 lib_a_SOURCES += memset-stub.c
 lib_a_SOURCES += memset.S
 lib_a_SOURCES += setjmp.S
+lib_a_SOURCES += stpcpy-stub.c
+lib_a_SOURCES += stpcpy.S
 lib_a_SOURCES += strchr-stub.c
 lib_a_SOURCES += strchr.S
 lib_a_SOURCES += strchrnul-stub.c
@@ -34,6 +36,8 @@ lib_a_SOURCES += strncmp-stub.c
 lib_a_SOURCES += strncmp.S
 lib_a_SOURCES += strnlen-stub.c
 lib_a_SOURCES += strnlen.S
+lib_a_SOURCES += strrchr-stub.c
+lib_a_SOURCES += strrchr.S
 
 lib_a_CCASFLAGS=$(AM_CCASFLAGS)
 lib_a_CFLAGS=$(AM_CFLAGS)

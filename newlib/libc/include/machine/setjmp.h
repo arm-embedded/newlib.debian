@@ -1,7 +1,7 @@
 
 _BEGIN_STD_C
 
-#ifdef __or1k__
+#if defined(__or1k__) || defined(__or1knd__)
 #define _JBLEN 31 /* 32 GPRs - r0 */
 #define _JBTYPE unsigned long
 #endif
@@ -61,10 +61,17 @@ _BEGIN_STD_C
 #endif
 
 #ifdef __nds32__
-/* Only 17 words are currently needed.
-   Preserve one word slot if we need to expand.
-   Check newlib/libc/machine/nds32/setjmp.S for more information.  */
+/* 17 words for GPRs,
+   1 word for $fpcfg.freg and 30 words for FPUs
+   Reserved 2 words for aligement-adjustment. When storeing double-precision
+   floating-point register into memory, the address has to be
+   double-word-aligned.
+   Check libc/machine/nds32/setjmp.S for more information.  */
+#if __NDS32_EXT_FPU_SP__ || __NDS32_EXT_FPU_DP__
+#define	_JBLEN 50
+#else
 #define _JBLEN 18
+#endif
 #endif
 
 #if defined(__Z8001__) || defined(__Z8002__)
@@ -331,6 +338,11 @@ _BEGIN_STD_C
 #define _JBLEN 0x44
 #endif
 
+#ifdef __VISIUM__
+/* All call-saved GP registers: r11-r19,r21,r22,r23.  */
+#define _JBLEN 12
+#endif
+
 #ifdef _JBLEN
 #ifdef _JBTYPE
 typedef	_JBTYPE jmp_buf[_JBLEN];
@@ -367,6 +379,13 @@ typedef int sigjmp_buf[_JBLEN+1+(sizeof (sigset_t)/sizeof (int))];
 #define __SIGMASK_FUNC pthread_sigmask
 #else
 #define __SIGMASK_FUNC sigprocmask
+#endif
+
+#ifdef __CYGWIN__
+/* Per POSIX, siglongjmp has to be implemented as function.  Cygwin
+   provides functions for both, siglongjmp and sigsetjmp since 2.2.0. */
+extern void siglongjmp (sigjmp_buf, int) __attribute__ ((__noreturn__));
+extern int sigsetjmp (sigjmp_buf, int);
 #endif
 
 #if defined(__GNUC__)
@@ -406,8 +425,8 @@ typedef int sigjmp_buf[_JBLEN+1+(sizeof (sigset_t)/sizeof (int))];
    are equivalent to sigsetjmp/siglongjmp when not saving the signal mask.
    New applications should use sigsetjmp/siglongjmp instead. */
 #ifdef __CYGWIN__
-extern void _longjmp(jmp_buf, int);
-extern int _setjmp(jmp_buf);
+extern void _longjmp (jmp_buf, int) __attribute__ ((__noreturn__));
+extern int _setjmp (jmp_buf);
 #else
 #define _setjmp(env)		sigsetjmp ((env), 0)
 #define _longjmp(env, val)	siglongjmp ((env), (val))

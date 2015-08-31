@@ -126,6 +126,10 @@ case "${target}" in
   v850*-*-*)
         AC_CONFIG_SUBDIRS([v850])
         ;;
+  visium-*-*)
+	AC_CONFIG_SUBDIRS([visium])
+	config_testsuite=false
+	;;
   xc16x-*-*)
 	AC_CONFIG_SUBDIRS([xc16x])
 	;;
@@ -158,6 +162,9 @@ case "${target}" in
 	;;
   iq2000-*-*)
 	AC_CONFIG_SUBDIRS([iq2000])
+	;;
+  or1k-*-* | or1knd-*-* )
+	AC_CONFIG_SUBDIRS([or1k])
 	;;
 esac
 

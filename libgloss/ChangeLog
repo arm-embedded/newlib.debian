@@ -1,3 +1,259 @@
+2015-08-20  Nick Clifton  <nickc@redhat.com>
+
+	PR libgloss/18786
+	* msp430/crt0.S: Remove watchdog disabling code.
+
+2015-08-07 Stefan Wallentowitz <stefan.wallentowitz@tum.de>
+
+	* or1k/boards/optimsoc.S: Fix symbol name
+	* or1k/crt0.S: Remove paranthesis
+
+2015-08-07 Stefan Wallentowitz <stefan.wallentowitz@tum.de>
+
+	* or1k/crt0.S: Add exception nesting
+	* or1k/exceptions-asm.S: ditto
+	* or1k/util.c: ditto
+
+2015-08-07 Stefan Wallentowitz <stefan.wallentowitz@tum.de>
+
+	* or1k/sbrk.c: Make heap end globally visible
+
+2015-08-04  Nick Clifton  <nickc@redhat.com>
+
+	* rl78/rl78-sim.ld: Provide a value for __rl78_abs__.
+	* rl78/rl78.ld: Likewise.
+
+2015-07-14  Andre Vieira  <andre.simoesdiasvieira@arm.com\>
+
+	* arm/elf-nano.specs: Added option to search for system headers in
+	newlib-nano directory.
+
+2015-05-26  Stefan Wallentowitz  <stefan.wallentowitz@tum.de>
+
+	* or1k/impure.c: Fix initialization of impure ptr
+
+2015-05-26  Stefan Wallentowitz  <stefan.wallentowitz@tum.de>
+
+	* or1k/boards/optimsoc.S: Heap for gzll kernel
+
+2015-05-26  Stefan Wallentowitz  <stefan.wallentowitz@tum.de>
+
+	* or1k/sbrk.c: Allow for different heap start
+
+2015-05-26  Stefan Wallentowitz  <stefan.wallentowitz@tum.de>
+
+	* or1k/or1k_uart.c: Fix interrupts
+
+2015-05-26  Stefan Wallentowitz  <stefan.wallentowitz@tum.de>
+
+	* or1k/timer.c: Properly set interrupt flags
+
+2015-05-26  Stefan Wallentowitz  <stefan.wallentowitz@tum.de>
+
+	* or1k/exception-asm.S: Store missing state
+
+2015-05-26  Stefan Wallentowitz  <stefan.wallentowitz@tum.de>
+
+	* or1k/crt0.S: Fix exception stack frame
+	* or1k/exception-asm.S: ditto
+
+2015-05-26  Stefan Wallentowitz  <stefan.wallentowitz@tum.de>
+
+	* or1k/interruts-asm.S: Change registers to callee-saved.
+
+2015-05-18  Nick Clifton  <nickc@redhat.com>
+
+	* msp430/msp430-sim.ld (.stack): Add an assertion to make sure
+	that the data area does not overrun the stack.  PROVIDE a new
+	symbol __stack_size to allow the user to set the limit.
+	* msp430/msp430xl-sim.ld (.stack): Likewise.
+	* rl78/rl78-sim.ld (.stack): Likewise.
+	* rl78/rl78.ld (.stack): Likewise.
+	* rx/rx-sim.ld (.stack): Likewise.
+	* rx/rx.ld (.stack): Likewise.
+
+2015-05-05  Nick Clifton  <nickc@redhat.com>
+
+	* msp430/msp430.ld: Delete.
+	* msp430/msp430F5438A-l.ld: Delete.
+	* msp430/msp430F5438A-s.ld: Delete.
+	* msp430/crt_movedata.S: Delete.
+
+	* msp430/Makefile.in (SCRIPTS): Remove msp430.ld.
+	(CRT_OBJS): Add crt_move_highdata.o.
+	* msp430/memmodel.h (START_CRT_FUNC): New macro.
+	(END_CRT_FUNC): New macro.
+	(WEAK_DEF): New macro.
+	* msp430/crt0.S: Use new macros.
+	(move_highdata): New code to initialise the .data section if it is
+	held in high memory.
+
+	* msp430/msp430-sim.ld (.data): Add .either.data.
+	(.rodata2): Move some read-only data sections here.
+	(.text): Add .either.text.
+	(.rodata): Add .either.rodata.
+	(.bss): Add .either.bss.
+	* msp430/msp430xl-sim.ld (MEMORY): Add HIROM.
+	(.rodata2): Move some read-only data sections here.
+	(.upper.data): New section.  Include notes about how to initialise
+	it.
+
+2015-04-21  Mike Frysinger  <vapier@gentoo.org>
+
+	* mcore/syscall.h: New header.
+
+2015-04-21  Mike Frysinger  <vapier@gentoo.org>
+
+	* arm/syscall.h: Adjust comment header.
+
+2015-04-09  Nick Clifton  <nickc@redhat.com>
+
+	* rx/crt0.S (_start): If string instructions are not allowed,
+	avoid using SMOVF.
+
+2015-04-08  Nick Clifton  <nickc@redhat.com>
+
+	* rx/rx.ld: Add .note and DWARF3 sections.
+	* rx/rx-sim.ld: Likewise.
+
+2015-04-07  Nick Clifton  <nickc@redhat.com>
+
+	* rl78/rl78.ld (.csstart): Add a KEEP directive.
+	* rl78/rl78-sim.ld (.csstart): Add a KEEP directive.
+
+2015-03-05  Nick Clifton  <nickc@redhat.com>
+
+	* v850/sim.ld: Add a .note.renesas section.
+
+2015-02-17  Renlin Li  <renlin.li@arm.com>
+
+	* arm/crt0.S: Initialise __heap_limit when ARM_RDI_MONITOR is defined.
+	* arm/syscalls.c: define __heap_limit global symbol.
+	* arm/syscalls.c (_sbrk): Honour __heap_limit.
+
+2015-02-11  Stefan Wallentowitz  <stefan.wallentowitz@tum.de>
+
+	* or1k/or1k_uart.c: Write bugfix and cleanup/documentation.
+	* or1k/or1k_uart.h: Cleanup.
+
+2015-01-22  Yaakov Selkowitz  <yselkowi@redhat.com>
+
+	* sparc/crt0.S: Declare use of system registers.
+	* sparc/cygmon-crt0.S: Ditto.
+	* sparc/erc32-crt0.S: Ditto.
+	* sparc/traps.S: Ditto.
+
+2015-01-21  Eric Botcazou  <ebotcazou@adacore.com>
+
+	* configure.in: Add Visium support.
+	* configure: Regenerate.
+	* visium/: New directory.
+
+2015-01-15  DJ Delorie  <dj@redhat.com>
+
+	* rl78/crt0.S: Initialize .saddr.  Avoid using SEL.
+	* rl78/rl78-sim.ld: Add .saddr/.frodata section.
+	* rl78/rl78.ld: Likewise.
+	* rl78/rl78-sim.ld: Make room for virtual register banks.
+	* rl78/rl78.ld: Likewise.
+
+	* rl78/vregs.h: New.
+	* rl78-sys.h: Use it.
+	* rl78/swrite.S: New.
+	* rl78/Makefile.in: Build it.
+	* rl78/write.c: Use it.
+
+2015-01-14  Stefan Wallentowitz  <stefan.wallentowitz@tum.de>
+
+	* or1k/include/or1k-sprs.h: New auto-generated header file.
+
+2015-01-05  Yaakov Selkowitz  <yselkowi@redhat.com>
+
+	* lm32/Makefile.in (install): Respect DESTDIR.
+	(install-scripts): Ditto.
+	* mep/Makefile.in (install): Ditto.
+	* mt/Makefile.in (install): Ditto.
+	* rl78/Makefile.in (install): Ditto.
+
+2014-12-27  Anthony Green  <green@moxielogic.com>
+
+	* moxie/crt0.S (_start): sub.l is now sub.
+
+2014-12-15  Stefan Wallentowitz  <stefan.wallentowitz@tum.de>
+
+	* or1k/Makefile.in: Build and install board libraries
+	* or1k/board.h: New file
+	* or1k/boards/README: New file
+	* or1k/boards/atlys.S: New file
+	* or1k/boards/de0_nano.S: New file
+	* or1k/boards/ml501.S: New file
+	* or1k/boards/ml509.S: New file
+	* or1k/boards/optimsoc.S: New file
+	* or1k/boards/or1ksim-uart.S: New file
+	* or1k/boards/or1ksim.S: New file
+	* or1k/boards/ordb1a3pe1500.S: New file
+	* or1k/boards/ordb2a.S: New file
+	* or1k/boards/orpsocrefdesign.S: New file
+	* or1k/boards/tmpl.S: New file
+	* or1k/boards/tmpl.c: New file
+
+2014-12-15  Stefan Wallentowitz  <stefan.wallentowitz@tum.de>
+
+	* or1k/Makefile.in: Add libor1k
+	* or1k/README: New file
+	* or1k/caches-asm.S: New file
+	* or1k/exceptions-asm.S: New file
+	* or1k/exceptions.c: New file
+	* or1k/impure.c: New file
+	* or1k/include/or1k-nop.h: New file
+	* or1k/include/or1k-support.h: New file
+	* or1k/interrupts-asm.S: New file
+	* or1k/interrupts.c: New file
+	* or1k/mmu-asm.S: New file
+	* or1k/or1k-internals.h: New file
+	* or1k/or1k_uart.c: New file
+	* or1k/or1k_uart.h: New file
+	* or1k/outbyte.S: New file
+	* or1k/sbrk.c: New file
+	* or1k/sync-asm.S: New file
+	* or1k/syscalls.c: New file
+	* or1k/timer.c: New file
+	* or1k/util.c: New file
+
+2014-12-15  Stefan Wallentowitz  <stefan.wallentowitz@tum.de>
+
+	* README: Add details about or1k.
+	* configure.in: Add or1k/or1knd
+	* configure: Regenerated.
+	* or1k/aclocal.m4: New file.
+	* or1k/configure: Ditto.
+	* or1k/Makefile.in: New file
+	* or1k/configure.in: New file
+	* or1k/crt0.S: New file
+	* or1k/include/or1k-asm.h: New file
+
+2014-12-15  Nick Hung  <nick@andestech.com>
+
+	* libgloss/nds32/_exit.S: Finish with an infinite loop in _exit.
+	* libgloss/nds32/_getpid.S: Don't issue _getpid system call, it is
+	always successful.
+	* libgloss/nds32/_gettimeofday.S: No error for _gettimeofday is defined
+	in SYS_geterr handler.
+	* libgloss/nds32/_isatty.S: No error for _isatty is defined in
+	SYS_geterr handler.
+	* libgloss/nds32/_kill.S: Alway fail. errno = EINVAL.
+	* libgloss/nds32/_link.S: Alway fail. errno =  EMLINK.
+	* libgloss/nds32/_times.S: Alway fail. errno = EACCES.
+	* libgloss/nds32/_unlink.S: fix copy and paste error.
+	* libgloss/nds32/crt0.S: Add pre_c_init, post_c_init, arg_init.
+	* libgloss/nds32/crt1.S: Add pre_c_init, post_c_init, arg_init.
+	* libgloss/nds32/syscall_extra.h: Re-format.
+	* libgloss/nds32/vh.h: Add more virtual hosting number.
+
+2014-12-11  Anthony Green  <green@moxielogic.com>
+
+	* moxie/configure: Rebuilt.
+
 2014-11-28  Jaydeep Patil  <jaydeep.patil@imgtec.com>
 	    Matthew Fortune  <Matthew.Fortune@imgtec.com>
 

@@ -238,14 +238,14 @@ case "${host_cpu}" in
 	;;
   nds32*)
 	machine_dir=nds32
-	newlib_cflags="${newlib_cflags} -DPREFER_SIZE_OVER_SPEED "
-	newlib_cflags="${newlib_cflags} -DSMALL_MEMORY "
+	libm_machine_dir=nds32
 	newlib_cflags="${newlib_cflags} -ffunction-sections -fdata-sections"
+	newlib_cflags="${newlib_cflags} -DHAVE_RENAME"
 	;;
   nios2*)
 	machine_dir=nios2
 	;;
-  or1k*)
+  or1k*|or1knd*)
 	machine_dir=or1k
 	;;
   powerpc*)
@@ -285,6 +285,9 @@ case "${host_cpu}" in
   v850*)
 	machine_dir=v850
 	newlib_cflags="${newlib_cflags} -DPREFER_SIZE_OVER_SPEED "
+	;;
+  visium)
+	machine_dir=visium
 	;;
   w65*)
 	machine_dir=w65
@@ -502,8 +505,10 @@ case "${host}" in
   nios2*)
 	sys_dir=
 	;;
-  or1k-*-* | or1knd-*-*)
-        syscall_dir=syscalls
+  or1k-*-elf | or1knd-*-elf)
+	sys_dir=or1k
+	newlib_cflags="${newlib_cflags} -DREENTRANT_SYSCALLS_PROVIDED "
+	have_crt0="no"
 	;;
   powerpcle-*-pe)
 	posix_dir=posix
@@ -541,6 +546,9 @@ case "${host}" in
         if [ "x${newlib_may_supply_syscalls}" = "xno" ] ; then
           have_crt0="no"
         fi
+	;;
+  visium-*-*)
+	sys_dir=
 	;;
   w65-*-*)
 	sys_dir=w65
@@ -748,6 +756,9 @@ case "${host}" in
   nds32*)
 	syscall_dir=syscalls
 	;;
+  or1k*|or1knd*)
+	syscall_dir=syscalls
+	;;
   powerpc*-*-eabialtivec*)
 	default_newlib_io_long_long="yes"
 	newlib_cflags="${newlib_cflags} -DMISSING_SYSCALL_NAMES"
@@ -796,6 +807,10 @@ case "${host}" in
 	;;
   v850*-*-*)
 	syscall_dir=syscalls
+	;;
+  visium-*-*)
+	newlib_cflags="${newlib_cflags} -DCLOCK_PROVIDED -DHAVE_SYSTEM -DMISSING_SYSCALL_NAMES"
+	syscall_dir=
 	;;
   w65-*-*)
 	syscall_dir=syscalls	
