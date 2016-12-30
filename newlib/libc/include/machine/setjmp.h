@@ -92,6 +92,9 @@ _BEGIN_STD_C
 #  define _JBLEN (13 * 4)
 # elif defined(__unix__) || defined(__rtems__)
 #  define _JBLEN	9
+# elif defined(__iamcu__)
+/* Intel MCU jmp_buf only covers callee-saved registers. */
+#  define _JBLEN	6
 # else
 #  include "setjmp-dj.h"
 # endif
@@ -250,12 +253,20 @@ _BEGIN_STD_C
 #define _JBLEN 10
 #endif
 
+#ifdef  __FT32__
+#define _JBLEN 27
+#endif
+
 #ifdef __iq2000__
 #define _JBLEN 32
 #endif
 
 #ifdef __mcore__
 #define _JBLEN 16
+#endif
+
+#ifdef __arc__
+#define _JBLEN 25 /* r13-r30,blink,lp_count,lp_start,lp_end,mlo,mhi,status32 */
 #endif
 
 #ifdef __MMIX__
@@ -285,6 +296,10 @@ _BEGIN_STD_C
 
 #ifdef __CRIS__
 #define _JBLEN 18
+#endif
+
+#ifdef __ia64
+#define _JBLEN 64
 #endif
 
 #ifdef __lm32__

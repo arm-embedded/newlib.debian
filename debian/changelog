@@ -1,3 +1,19 @@
+newlib (2.4.0.20160527-2) unstable; urgency=medium
+
+  * Fix wrong include path used in nano.specs (Closes: #801338)
+
+ -- Agustin Henze <tin@debian.org>  Fri, 30 Dec 2016 07:05:10 -0300
+
+newlib (2.4.0.20160527-1) unstable; urgency=medium
+
+  [ Philippe Mathieu-Daudé ]
+  * Imported Upstream version 2.4.0.20160527
+
+  [ Agustin Henze ]
+  * Make the build reproducible (locale) (Closes: #847033)
+
+ -- Agustin Henze <tin@debian.org>  Fri, 09 Dec 2016 11:45:41 -0300
+
 newlib (2.2.0+git20150830.5a3d536-1) unstable; urgency=medium
 
   * Imported Upstream version 2.2.0+git20150830.5a3d536

@@ -1,0 +1,80 @@
+--- newlib-2.4.0.20160527.orig/newlib/Makefile.am
++++ newlib-2.4.0.20160527/newlib/Makefile.am
+@@ -160,6 +160,7 @@ libc.a: libc/libc.a libm.a
+ 	rm -rf libc.a libg.a tmp
+ 	mkdir tmp
+ 	cd tmp; \
++	LC_ALL=C ; \
+ 	 $(AR) x ../libm.a $(MATHOBJS_IN_LIBC) ; \
+ 	 $(AR) x ../libc/libc.a ; \
+ 	 $(AR) $(AR_FLAGS) ../$@ *.o
+--- newlib-2.4.0.20160527.orig/newlib/Makefile.in
++++ newlib-2.4.0.20160527/newlib/Makefile.in
+@@ -921,6 +921,7 @@ uninstall-am: uninstall-toollibDATA unin
+ @USE_LIBTOOL_FALSE@	rm -rf libc.a libg.a tmp
+ @USE_LIBTOOL_FALSE@	mkdir tmp
+ @USE_LIBTOOL_FALSE@	cd tmp; \
++@USE_LIBTOOL_FALSE@	LC_ALL=C; \
+ @USE_LIBTOOL_FALSE@	 $(AR) x ../libm.a $(MATHOBJS_IN_LIBC) ; \
+ @USE_LIBTOOL_FALSE@	 $(AR) x ../libc/libc.a ; \
+ @USE_LIBTOOL_FALSE@	 $(AR) $(AR_FLAGS) ../$@ *.o
+--- newlib-2.4.0.20160527.orig/newlib/libc/Makefile.am
++++ newlib-2.4.0.20160527/newlib/libc/Makefile.am
+@@ -107,6 +107,7 @@ libc.a: $(SUBLIBS)
+ 	rm -rf tmp
+ 	mkdir tmp
+ 	cd tmp; \
++	LC_ALL=C ; \
+ 	 for i in $(SUBLIBS); do \
+ 	   $(AR) x ../$$i; \
+ 	 done; \
+--- newlib-2.4.0.20160527.orig/newlib/libc/Makefile.in
++++ newlib-2.4.0.20160527/newlib/libc/Makefile.in
+@@ -1026,6 +1026,7 @@ uninstall-am: uninstall-dvi-am uninstall
+ @USE_LIBTOOL_FALSE@	rm -rf tmp
+ @USE_LIBTOOL_FALSE@	mkdir tmp
+ @USE_LIBTOOL_FALSE@	cd tmp; \
++@USE_LIBTOOL_FALSE@	LC_ALL=C; \
+ @USE_LIBTOOL_FALSE@	 for i in $(SUBLIBS); do \
+ @USE_LIBTOOL_FALSE@	   $(AR) x ../$$i; \
+ @USE_LIBTOOL_FALSE@	 done; \
+--- newlib-2.4.0.20160527.orig/newlib/libc/sys/linux/Makefile.am
++++ newlib-2.4.0.20160527/newlib/libc/sys/linux/Makefile.am
+@@ -196,6 +196,7 @@ lib.a:  $(lib_a_OBJECTS)
+ 	rm -rf tmp
+ 	mkdir tmp
+ 	cd tmp; \
++	LC_ALL=C ; \
+ 	for i in $(SUBLIBS); do \
+ 	  $(AR) x ../$$i; \
+ 	done; \
+--- newlib-2.4.0.20160527.orig/newlib/libc/sys/linux/Makefile.in
++++ newlib-2.4.0.20160527/newlib/libc/sys/linux/Makefile.in
+@@ -1599,6 +1599,7 @@ uninstall-am:
+ @USE_LIBTOOL_FALSE@	rm -rf tmp
+ @USE_LIBTOOL_FALSE@	mkdir tmp
+ @USE_LIBTOOL_FALSE@	cd tmp; \
++@USE_LIBTOOL_FALSE@	LC_ALL=C; \
+ @USE_LIBTOOL_FALSE@	for i in $(SUBLIBS); do \
+ @USE_LIBTOOL_FALSE@	  $(AR) x ../$$i; \
+ @USE_LIBTOOL_FALSE@	done; \
+--- newlib-2.4.0.20160527.orig/newlib/libm/Makefile.am
++++ newlib-2.4.0.20160527/newlib/libm/Makefile.am
+@@ -25,6 +25,7 @@ libm.a: $(SUBLIBS)
+ 	rm -rf tmp
+ 	mkdir tmp
+ 	cd tmp; \
++	LC_ALL=C ; \
+ 	  for i in $(SUBLIBS); do \
+ 	    $(AR) x ../$$i; \
+ 	done; \
+--- newlib-2.4.0.20160527.orig/newlib/libm/Makefile.in
++++ newlib-2.4.0.20160527/newlib/libm/Makefile.in
+@@ -899,6 +899,7 @@ uninstall-am: uninstall-dvi-am uninstall
+ @USE_LIBTOOL_FALSE@	rm -rf tmp
+ @USE_LIBTOOL_FALSE@	mkdir tmp
+ @USE_LIBTOOL_FALSE@	cd tmp; \
++@USE_LIBTOOL_FALSE@	LC_ALL=C; \
+ @USE_LIBTOOL_FALSE@	  for i in $(SUBLIBS); do \
+ @USE_LIBTOOL_FALSE@	    $(AR) x ../$$i; \
+ @USE_LIBTOOL_FALSE@	done; \
