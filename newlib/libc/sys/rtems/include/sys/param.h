@@ -47,8 +47,6 @@
 
 /* end of from newlib's <sys/param.h> */
 
-#include <unistd.h>
-
 #define	BSD	199506		/* System version (year & month). */
 #define BSD4_3	1
 #define BSD4_4	1
@@ -109,6 +107,7 @@
 
 #define	NZERO	0		/* default "nice" */
 
+#define	NBBY	8		/* number of bits in a byte */
 #define	NBPW	sizeof(int)	/* number of bytes per word (integer) */
 
 #define	CMASK	022		/* default file mask: S_IWGRP|S_IWOTH */

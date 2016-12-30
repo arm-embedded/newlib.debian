@@ -12,6 +12,7 @@ Build-Depends:
  xz-utils,
  libisl-dev,
  libcloog-isl-dev,
+ quilt,
 Standards-Version: 3.9.6
 Homepage: https://sourceware.org/newlib/
 Vcs-Git: git://anonscm.debian.org/collab-maint/newlib.git

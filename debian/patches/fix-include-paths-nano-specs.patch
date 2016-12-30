@@ -1,0 +1,13 @@
+Index: newlib-2.4.0.20160527/libgloss/arm/elf-nano.specs
+===================================================================
+--- newlib-2.4.0.20160527.orig/libgloss/arm/elf-nano.specs
++++ newlib-2.4.0.20160527/libgloss/arm/elf-nano.specs
+@@ -3,7 +3,7 @@
+ %rename cpp		nano_cpp
+ 
+ *cpp:
+--isystem =/include/newlib-nano %(nano_cpp)
++-isystem /usr/include/newlib/nano %(nano_cpp)
+ 
+ *nano_libc:
+ -lc_nano
