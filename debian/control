@@ -13,6 +13,7 @@ Build-Depends:
  libisl-dev,
  libcloog-isl-dev,
  quilt,
+ rename,
 Standards-Version: 4.1.0
 Homepage: https://sourceware.org/newlib/
 Vcs-Git: git://anonscm.debian.org/collab-maint/newlib.git
